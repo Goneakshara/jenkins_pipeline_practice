@@ -12,7 +12,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Creating build output'
-
                 sh '''
                     mkdir -p build-output
                     echo "Hello from Jenkins Pipeline" > build-output/message.txt
@@ -24,12 +23,8 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing build output'
-
-                sh '''
-                    test -s build-output/message.txt
-                    cat build-output/message.txt
-                    echo "Test passed"
-                '''
+                sh 'test -s build-output/message.txt'
+                error 'Intentional failure for Jenkins practice'
             }
         }
 
@@ -40,26 +35,18 @@ pipeline {
             }
         }
     }
-    
-     
-post {
-    always {
-        echo 'Pipeline execution completed'
-    }
 
-    success {
-        echo 'Congratulations! Pipeline succeeded'
-    }
+    post {
+        always {
+            echo 'Pipeline execution completed'
+        }
 
-    failure {
-        echo 'Pipeline failed. Please check the logs'
-    }
-}
-stage('Test') {
-    steps {
-        echo 'Testing build output'
-        error 'Intentional failure for Jenkins practice'
-    }
-}
+        success {
+            echo 'Congratulations! Pipeline succeeded'
+        }
 
+        failure {
+            echo 'Pipeline failed. Please check the logs'
+        }
+    }
 }
