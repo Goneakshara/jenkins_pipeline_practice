@@ -40,4 +40,21 @@ pipeline {
             }
         }
     }
+    
+     
+post {
+    always {
+        echo 'Pipeline execution completed'
+    }
+
+    success {
+        echo 'Congratulations! Pipeline succeeded'
+    }
+
+    failure {
+        echo 'Pipeline failed. Please check the logs'
+    }
+}
+
+
 }
