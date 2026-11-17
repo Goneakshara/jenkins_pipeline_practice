@@ -5,25 +5,38 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Source code is ready'
+                echo 'Source code checkout completed'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Building application'
+                echo 'Creating build output'
+
+                sh '''
+                    mkdir -p build-output
+                    echo "Hello from Jenkins Pipeline" > build-output/message.txt
+                    echo "Build completed successfully"
+                '''
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running application tests'
+                echo 'Testing build output'
+
+                sh '''
+                    test -s build-output/message.txt
+                    cat build-output/message.txt
+                    echo "Test passed"
+                '''
             }
         }
 
-        stage('Deploy') {
+        stage('Archive') {
             steps {
-                echo 'Deploying application'
+                archiveArtifacts artifacts: 'build-output/message.txt',
+                                 fingerprint: true
             }
         }
     }
