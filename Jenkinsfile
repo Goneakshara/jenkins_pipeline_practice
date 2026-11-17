@@ -55,6 +55,11 @@ post {
         echo 'Pipeline failed. Please check the logs'
     }
 }
-
+stage('Test') {
+    steps {
+        echo 'Testing build output'
+        error 'Intentional failure for Jenkins practice'
+    }
+}
 
 }
