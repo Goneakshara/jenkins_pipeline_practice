@@ -24,7 +24,7 @@ pipeline {
             steps {
                 echo 'Testing build output'
                 sh 'test -s build-output/message.txt'
-                error 'Intentional failure for Jenkins practice'
+                
             }
         }
 
